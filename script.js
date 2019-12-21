@@ -1,21 +1,23 @@
 var myQuiz = $("#quizContainer");
-var secondsElapsed = questions.length * 15;
+var secondsElapsed;
 var timer;
-var userAnswer = [];
+var userAnswer;
 var answer = questions[answer];
+var currentTime = timer - secondsElapsed;
+var currentIndex = 0;
 
-//for loop to go thru the questions.
 //does this need to be inside the timer function?
 //or is the timer inside the for loop??
 
 function startTimer() {
+  displayQuestion();
   timer = setInterval(function() {
+    secondsElapsed = questions.length * 15;
     secondsElapsed -= 1;
     console.log(secondsElapsed);
-    document.getElementById("quizContainer").textContent = secondsElapsed;
-    //Append Timer to header!!^^^^
-
-    //**Does the While loop go here?? */
+    // document.getElementById("quizContainer").textContent =
+    //   "Time Remaining: " + secondsElapsed;
+    // document.appendChild("#quizContainer");
 
     if (secondsElapsed === 0) {
       clearInterval(timer);
@@ -23,28 +25,39 @@ function startTimer() {
     }
   }, 10);
 }
+
+//display questions in the div
+
+function displayQuestion() {
+  var titleElement = document.createElement("h1");
+  var currentQuestion = questions[currentIndex].title;
+  titleElement.textContent = currentQuestion;
+
+  console.log(titleElement);
+
+  document.appendChild("#card-body").textContent(title[currentIndex]);
+  var choices = document.createElement("button");
+  document.appendChild("#card-body");
+}
+
+function addTime() {
+  addTime = secondsElapsed + 15;
+}
+
+function removeTime() {
+  removeTime = secondsElapsed - 5;
+}
+
+function isCorrectAnswer() {
+  if (userAnswer === answer) {
+    addTime();
+  } else {
+    removeTime();
+  }
+}
+
 console.log(questions);
 
 document.getElementById("startQuiz").addEventListener("click", startTimer);
 
 //----------------------------------------------------------------------------
-
-//------> While Loop to move thru questions
-// while (i < questions.length) {
-// var i = 0;
-//   if (userAnswer === answer) {
-//     //Add 15 second to timer and move to the next question !!!!!! <-------
-//   } else userAnswer !== answer;
-//   {
-//     //take 5 second off timer and move to the next question!! <------
-//   }
-// }
-// //Append questions to questionContainer <--------
-
-//------> Have questions show up in #card-body
-//------> Question goes in .theQuestion
-//------> Answer array goes in .firstChoice, .secondChoice, .thirdChoice, .fourthChoice
-
-//Store user answer to local storage <---------
-userAnswer[0];
-localStorage.setItem("userAnswer", JSON.stringify(userAnswer));
