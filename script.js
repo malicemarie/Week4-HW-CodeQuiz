@@ -51,6 +51,8 @@ function displayQuestion() {
   console.log(choices);
 }
 
+//it's removing 15 seconds every other question no matter what the answer is
+//when it console logs it is console logs it incorrectly so something is not lining up
 function isCorrectAnswer() {
   var answer = questions[currentIndex].answer;
   userAnswer = this.innerHTML;
