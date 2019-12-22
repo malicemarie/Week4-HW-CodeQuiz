@@ -23,7 +23,7 @@ function startTimer() {
       clearInterval(timer);
       alert("Time's Up");
     }
-  }, 100);
+  }, 1000);
 }
 
 //display questions in the div
@@ -43,6 +43,7 @@ function displayQuestion() {
     var cardBody = document.getElementById("card-body");
     cardBody.appendChild(choicesElement);
     choicesElement.textContent = choices[i];
+    choicesElement.onclick = isCorrectAnswer;
   }
 
   //<------- If a user clicks a button move on to the next question
@@ -51,22 +52,26 @@ function displayQuestion() {
 }
 
 function isCorrectAnswer() {
-  var answer = questions.answer[currentIndex];
+  var answer = questions[currentIndex].answer;
+  userAnswer = this.innerHTML;
+
   if (userAnswer === answer) {
     addTime();
+    console.log("answer correct");
   } else {
     removeTime();
+    console.log("answer incorrect");
   }
 }
 
 function updateUserAnswer() {}
 
 function addTime() {
-  secondsElapsed + 15;
+  secondsElapsed += 15;
 }
 
 function removeTime() {
-  secondsElapsed - 5;
+  secondsElapsed -= 5;
 }
 
 function getScore() {
