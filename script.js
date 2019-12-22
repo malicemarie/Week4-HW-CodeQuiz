@@ -1,9 +1,8 @@
 var myQuiz = $("#quizContainer");
-var secondsElapsed = questions.length * 15;
+var secondsRemaining = questions.length * 15;
 var timer;
 var userAnswer;
 var answer = questions[answer];
-var currentTime = timer - secondsElapsed;
 var currentIndex = 0;
 var startQuiz = document.getElementById("startQuiz");
 
@@ -13,13 +12,13 @@ function startTimer() {
   displayQuestion();
 
   timer = setInterval(function() {
-    secondsElapsed -= 1;
-    console.log(secondsElapsed);
+    secondsRemaining -= 1;
+    console.log(secondsRemaining);
 
     var timerDisplay = document.getElementById("theTimer");
-    timerDisplay.textContent = secondsElapsed;
+    timerDisplay.textContent = secondsRemaining;
 
-    if (secondsElapsed === 0) {
+    if (secondsRemaining === 0) {
       clearInterval(timer);
       alert("Time's Up");
     }
@@ -29,6 +28,9 @@ function startTimer() {
 //display questions in the div
 
 function displayQuestion() {
+  document.getElementById("card-header").innerHTML = "";
+  document.getElementById("card-body").innerHTML = "";
+
   var titleElement = document.createElement("h1");
   var currentQuestion = questions[currentIndex].title;
   titleElement.textContent = currentQuestion;
@@ -46,8 +48,6 @@ function displayQuestion() {
     choicesElement.onclick = isCorrectAnswer;
   }
 
-  //<------- If a user clicks a button move on to the next question
-
   console.log(choices);
 }
 
@@ -56,27 +56,35 @@ function isCorrectAnswer() {
   userAnswer = this.innerHTML;
 
   if (userAnswer === answer) {
-    addTime();
     console.log("answer correct");
   } else {
     removeTime();
     console.log("answer incorrect");
   }
+  currentIndex++;
+  if (currentIndex === questions.length) {
+    console.log(getScore());
+    window.location.href = "highscore.html";
+  }
+  displayQuestion();
+  console.log("finish isCorrectAnswer");
 }
 
-function updateUserAnswer() {}
-
 function addTime() {
-  secondsElapsed += 15;
+  secondsRemaining += 15;
 }
 
 function removeTime() {
-  secondsElapsed -= 5;
+  secondsRemaining -= 15;
 }
 
 function getScore() {
-  var userScore = userAnswer;
+  return secondsRemaining;
 }
+
+localStorage.setItem("Score", getScore());
+
+function getUserInfo() {}
 
 function saveScore() {}
 
