@@ -3,6 +3,10 @@ var userName;
 function getUserName() {
   userName = prompt("Please Enter your Name:");
   localStorage.setItem("Name", userName);
+
+  if ((userName = "")) {
+    alert("Please enter your name");
+  }
 }
 
 getUserName();

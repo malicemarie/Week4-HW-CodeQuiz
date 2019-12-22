@@ -20,7 +20,7 @@ function startTimer() {
 
     if (secondsRemaining === 0) {
       clearInterval(timer);
-      alert("Time's Up");
+      window.location.href = "highscore.html";
     }
   }, 1000);
 }
@@ -57,7 +57,7 @@ function isCorrectAnswer() {
 
   if (userAnswer === answer) {
     console.log("answer correct");
-  } else {
+  } else if (userAnswer !== answer) {
     removeTime();
     console.log("answer incorrect");
   }
@@ -81,8 +81,7 @@ function removeTime() {
 function getScore() {
   return secondsRemaining;
 }
-
-localStorage.setItem("Score", getScore());
+localStorage.setItem("Score", secondsRemaining);
 
 function getUserInfo() {}
 
