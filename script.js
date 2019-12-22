@@ -1,29 +1,29 @@
 var myQuiz = $("#quizContainer");
-var secondsElapsed;
+var secondsElapsed = questions.length * 15;
 var timer;
 var userAnswer;
 var answer = questions[answer];
 var currentTime = timer - secondsElapsed;
 var currentIndex = 0;
+var startQuiz = document.getElementById("startQuiz");
 
-//does this need to be inside the timer function?
-//or is the timer inside the for loop??
+startQuiz.onclick = startTimer;
 
 function startTimer() {
   displayQuestion();
+
   timer = setInterval(function() {
-    secondsElapsed = questions.length * 15;
     secondsElapsed -= 1;
     console.log(secondsElapsed);
-    // document.getElementById("quizContainer").textContent =
-    //   "Time Remaining: " + secondsElapsed;
-    // document.appendChild("#quizContainer");
+
+    var timerDisplay = document.getElementById("theTimer");
+    timerDisplay.textContent = secondsElapsed;
 
     if (secondsElapsed === 0) {
       clearInterval(timer);
-      console.log("Time's Up");
+      alert("Time's Up");
     }
-  }, 10);
+  }, 100);
 }
 
 //display questions in the div
@@ -33,22 +33,25 @@ function displayQuestion() {
   var currentQuestion = questions[currentIndex].title;
   titleElement.textContent = currentQuestion;
 
-  console.log(titleElement);
+  var cardHeader = document.getElementById("card-header");
+  cardHeader.appendChild(titleElement);
 
-  document.appendChild("#card-body").textContent(title[currentIndex]);
-  var choices = document.createElement("button");
-  document.appendChild("#card-body");
-}
+  var choices = questions[currentIndex].choices;
 
-function addTime() {
-  addTime = secondsElapsed + 15;
-}
+  for (var i = 0; i < choices.length; i++) {
+    var choicesElement = document.createElement("button");
+    var cardBody = document.getElementById("card-body");
+    cardBody.appendChild(choicesElement);
+    choicesElement.textContent = choices[i];
+  }
 
-function removeTime() {
-  removeTime = secondsElapsed - 5;
+  //<------- If a user clicks a button move on to the next question
+
+  console.log(choices);
 }
 
 function isCorrectAnswer() {
+  var answer = questions.answer[currentIndex];
   if (userAnswer === answer) {
     addTime();
   } else {
@@ -56,8 +59,22 @@ function isCorrectAnswer() {
   }
 }
 
-console.log(questions);
+function updateUserAnswer() {}
 
-document.getElementById("startQuiz").addEventListener("click", startTimer);
+function addTime() {
+  secondsElapsed + 15;
+}
+
+function removeTime() {
+  secondsElapsed - 5;
+}
+
+function getScore() {
+  var userScore = userAnswer;
+}
+
+function saveScore() {}
+
+console.log(questions);
 
 //----------------------------------------------------------------------------
